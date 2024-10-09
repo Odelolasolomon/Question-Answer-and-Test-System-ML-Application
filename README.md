@@ -82,9 +82,10 @@ CREATE TABLE TestQuestion (
     correct_answer TEXT NOT NULL,
     document_id INT REFERENCES Document(id) ON DELETE CASCADE
 );
-
+```
 
 ## API Endpoints
+``` python
   **Root (/)**
 - Description: Returns a welcome message.
 - Method: GET
@@ -136,28 +137,34 @@ CREATE TABLE TestQuestion (
   "knowledge_understood": true,
   "knowledge_confidence": 85.6
 }
+```
 
 ## Models and Techniques
  **Question Answering (BERT)**
 - For question answering, I used a pre-trained BERT model, specifically bert-base-uncased. The model takes in the document context and the user's question to predict the answer. Here's the basic logic:
-- inputs = qa_tokenizer.encode_plus(question, context, return_tensors="pt")
-- outputs = qa_model(**inputs)
-- start_index = torch.argmax(outputs.start_logits)
-- end_index = torch.argmax(outputs.end_logits)
+  ``` python
+ inputs = qa_tokenizer.encode_plus(question, context, return_tensors="pt")
+ outputs = qa_model(**inputs)
+ start_index = torch.argmax(outputs.start_logits)
+ end_index = torch.argmax(outputs.end_logits)
+ 
+
 
  ## Summarization (T5)
 - I used T5-small for summarization. Given a text, it generates a concise summary that we format as bullet points:
-- inputs = summarization_tokenizer.encode("summarize: " + text, return_tensors="pt")
-- summary_ids = summarization_model.generate(inputs, max_length=100, num_beams=4)
-- summary = summarization_tokenizer.decode(summary_ids[0], skip_special_tokens=True)
+  ``` python
+ inputs = summarization_tokenizer.encode("summarize: " + text, return_tensors="pt")
+ summary_ids = summarization_model.generate(inputs, max_length=100, num_beams=4)
+ summary = summarization_tokenizer.decode(summary_ids[0], skip_special_tokens=True)
 
 ## Answer Evaluation (Sentence Transformer)
 - To evaluate the user's answer, I calculated the cosine similarity between the user-provided answer and the correct answer using SentenceTransformer (all-MiniLM-L6-v2):
+  ``` python
 - user_embedding = similarity_model.encode(user_answer, convert_to_tensor=True)
 - correct_embedding = similarity_model.encode(correct_answer, convert_to_tensor=True)
 - similarity_score = util.pytorch_cos_sim(user_embedding, correct_embedding).item()
 
-**NOte :If the similarity score exceeds 0.7, the answer is considered correct.**
+**Note: If the similarity score exceeds 0.7, the answer is considered correct.**
 
 **Usage**
 - Once the project is up and running, you can interact with the API using tools like Postman or cURL. Follow the steps outlined in the API section to upload documents, query questions, and evaluate answers.
