@@ -160,7 +160,7 @@ CREATE TABLE TestQuestion (
 ## Answer Evaluation (Sentence Transformer)
 - To evaluate the user's answer, I calculated the cosine similarity between the user-provided answer and the correct answer using SentenceTransformer (all-MiniLM-L6-v2):
   
-  ```bash
+```bash
  user_embedding = similarity_model.encode(user_answer, convert_to_tensor=True)
  correct_embedding = similarity_model.encode(correct_answer, convert_to_tensor=True)
  similarity_score = util.pytorch_cos_sim(user_embedding, correct_embedding).item()
