@@ -34,15 +34,15 @@ similarity_model = SentenceTransformer('all-MiniLM-L6-v2')
 
 # Database Models
 class Document(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
+    document_id = db.Column(db.Integer, primary_key=True)
     content = db.Column(db.Text, nullable=False)
 
 
 class TestQuestion(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
+    test_id = db.Column(db.Integer, primary_key=True)
     question = db.Column(db.String(255), nullable=False)
     correct_answer = db.Column(db.Text, nullable=False)
-    document_id = db.Column(db.Integer, db.ForeignKey('document.id'), nullable=False)
+    document_id = db.Column(db.Integer, db.ForeignKey('document.document_id'), nullable=False)
 
     document = db.relationship('Document', backref=db.backref('test_questions', lazy=True))
 
@@ -133,7 +133,7 @@ def query():
         "answer": answer,
         "bullet_points": bullet_points,
         "test_question": test_question,
-        "test_question_id": test_question_record.id
+        "test_question_id": test_question_record.test_id
     }
     return jsonify(response), 200
 
