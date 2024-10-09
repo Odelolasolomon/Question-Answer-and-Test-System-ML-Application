@@ -1,0 +1,10 @@
+Flask
+Flask-Cors
+numpy
+nltk
+numpy 
+transformers
+sentence_transformers
+flask_sqlalchemy
+psycopg2-binary
+torch
