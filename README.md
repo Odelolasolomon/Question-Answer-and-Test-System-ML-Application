@@ -35,11 +35,13 @@ To run this project locally, follow these steps:
    cd <put project directory here>
    ```
 2. **Set up a virtual environment(you can also do this in your VScode or via your command prompt**
+   ```cmd
    - python -m venv venv
    - source venv/bin/activate  # For Linux/Mac
    - venv\Scripts\activate  # For Windows
+   ```
   
-3. **Install dependencies**
+4. **Install dependencies**
    ``` cmd
    pip install -r requirements.txt
    - Flask
@@ -57,22 +59,30 @@ To run this project locally, follow these steps:
 - CREATE DATABASE qat;
 
 5. Set up the envioronment variables(for security purpose you can set it up in a .env file)
+   ```python
    - DATABASE_URL=postgresql://<username>:<password>@localhost/qat
+   ---
+   
 
-6. Create sql tables for the system(Document and TestQuestion are the tables created)
-   -- Document Table
+7. Create sql tables for the system(Document and TestQuestion are the tables created)
+  
+
+- **Document and Question Table**
+
+```SQL
 CREATE TABLE Document (
     id SERIAL PRIMARY KEY,
     content TEXT NOT NULL
 );
 
--- TestQuestion Table
+
 CREATE TABLE TestQuestion (
     id SERIAL PRIMARY KEY,
     question VARCHAR(255) NOT NULL,
     correct_answer TEXT NOT NULL,
     document_id INT REFERENCES Document(id) ON DELETE CASCADE
 );
+
 
 ## API Endpoints
   **Root (/)**
