@@ -147,7 +147,7 @@ CREATE TABLE TestQuestion (
  outputs = qa_model(**inputs)
  start_index = torch.argmax(outputs.start_logits)
  end_index = torch.argmax(outputs.end_logits)
- ```
+ 
  
 
 
@@ -157,7 +157,7 @@ CREATE TABLE TestQuestion (
  inputs = summarization_tokenizer.encode("summarize: " + text, return_tensors="pt")
  summary_ids = summarization_model.generate(inputs, max_length=100, num_beams=4)
  summary = summarization_tokenizer.decode(summary_ids[0], skip_special_tokens=True)
- ```
+ 
 
 ## Answer Evaluation (Sentence Transformer)
 - To evaluate the user's answer, I calculated the cosine similarity between the user-provided answer and the correct answer using SentenceTransformer (all-MiniLM-L6-v2):
@@ -166,7 +166,7 @@ CREATE TABLE TestQuestion (
  user_embedding = similarity_model.encode(user_answer, convert_to_tensor=True)
  correct_embedding = similarity_model.encode(correct_answer, convert_to_tensor=True)
  similarity_score = util.pytorch_cos_sim(user_embedding, correct_embedding).item()
- ```
+
 
 **Note: If the similarity score exceeds 0.7, the answer is considered correct.**
 
