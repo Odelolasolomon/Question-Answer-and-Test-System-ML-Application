@@ -34,20 +34,22 @@ To run this project locally, follow these steps:
    git clone https://github.com/your-username/qa-system.git
    cd <put project directory here>
    ```
-2. **Set up a virtual environment**
+2. **Set up a virtual environment(you can also do this in your VScode or via your command prompt**
    - python -m venv venv
    - source venv/bin/activate  # For Linux/Mac
    - venv\Scripts\activate  # For Windows
   
 3. **Install dependencies**
+   ``` cmd
    pip install -r requirements.txt
    - Flask
-   -  Flask-CORS
+   - Flask-CORS
    - transformers
    - torch
    - sentence-transformers
    - Flask-SQLAlchemy
    - psycopg2-binary
+   ```
   
   Configure PostgreSQL:
 
