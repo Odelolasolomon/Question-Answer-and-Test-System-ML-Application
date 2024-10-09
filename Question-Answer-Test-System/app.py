@@ -12,21 +12,23 @@ from flask_sqlalchemy import SQLAlchemy
 app = Flask(__name__)
 CORS(app)
 
-# Configure PostgreSQL database
+# Configure PostgreSQL database(i advise creating a .env file for security purpose in production)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:242129@localhost/qat'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
-# Load models
+# Load pretrained models
 qa_model_name = "bert-base-uncased"
 summarization_model_name = "t5-small"
 
+#initialize the tokenizers on the models
 qa_tokenizer = AutoTokenizer.from_pretrained(qa_model_name)
 qa_model = AutoModelForQuestionAnswering.from_pretrained(qa_model_name)
 
 summarization_tokenizer = AutoTokenizer.from_pretrained(summarization_model_name)
 summarization_model = AutoModelForSeq2SeqLM.from_pretrained(summarization_model_name)
 
+#initialize the similarity checker
 similarity_model = SentenceTransformer('all-MiniLM-L6-v2')
 
 
